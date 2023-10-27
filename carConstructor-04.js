@@ -5,11 +5,11 @@ function Car(model, milesPerGallon) {
   this.odometer = 0;
 }
 
-Car.prototype.fill = (gallons) => {
+Car.prototype.fill = function () {
   this.tank += gallons;
 }
 
-Car.prototype.drive = (distance) => {
+Car.prototype.drive = function () {
   if (!this.tank) {
     return 'can`t drive any more distance'
   }
