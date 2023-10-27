@@ -9,36 +9,29 @@ function Playlist() {
   this.currentSongIndex = 0
 }
 
-Playlist.prototype.add = (song) => {
+Playlist.prototype.add = function (song) {
   this.songsList.push(song)
 }
 
-Playlist.prototype.play = () => {
-  if (!this.songsList.length) return 'No song to play'
-  this.songsList[this.currentSongIndex].isPlaying = true;
+Playlist.prototype.play = function () {
+  if (!this.songsList.length) return 'No song to play';
+  const currentSong = this.songsList[this.currentSongIndex];
+  currentSong.isPlaying = true;
+  return `${currentSong.title} started to play`
 }
 
-Playlist.prototype.stop = () => {
-  if (!this.songsList.length) return 'No song to stop'
-  this.songsList[this.currentSongIndex].isPlaying = false;
+Playlist.prototype.stop = function () {
+  if (!this.songsList.length) return 'No song to stop';
+  const currentSong = this.songsList[this.currentSongIndex];
+  currentSong.isPlaying = false;
+  return `${currentSong.title} stopped`
 }
 
-Playlist.prototype.next = () => {
-  this.stop()
+Playlist.prototype.next = function () {
+  let currentSong = this.stop()
   this.currentSongIndex++;
-  if (currentSongIndex >= this.songsList.length) {
-    currentSongIndex = 0;
+  if (this.currentSongIndex >= this.songsList.length) {
+    this.currentSongIndex = 0;
   }
-  this.play()
+  return currentSong + ', ' + this.play()
 }
-
-const playlist = new Playlist();
-const heyJude = new Song("Hey Jude", "The Beatles");
-const jaded = new Song("Jaded", "Aerosmith");
-playlist.add(heyJude);
-playlist.add(jaded);
-playlist.play(); // Hey Jude started to play
-playlist.next(); // Hey Jude stopped, Jaded started
-playlist.next(); // Jaded stopped, Hey Jude started
-playlist.stop(); // Hey Jude stopped
-playlist.play(); // Hey Jude started
